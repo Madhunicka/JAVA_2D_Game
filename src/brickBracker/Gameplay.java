@@ -1,5 +1,7 @@
 package brickBracker;
 
+import brickBracker.network.UDPServer;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -21,7 +23,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 	private int score = 0;
 	private int totalbricks= 21;
 	private Timer timer;
-	
+	UDPServer server;
 	private int delay = 4;
 	//setting up the position of the scrolling bar and the ball
 	
@@ -41,7 +43,9 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 		setFocusTraversalKeysEnabled(false);
 		timer = new Timer(delay, this);
 		timer.start();
-		
+//		server.start();
+		this.server = new UDPServer(this);
+		this.server.start();
 	}
 	public void paint(Graphics g) {
 		
@@ -177,6 +181,23 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	//export the methods to move the paddle
+
+	public void rightKey() {
+		KeyEvent e = new KeyEvent(
+				this,
+				KeyEvent.KEY_PRESSED,
+				System.currentTimeMillis(),
+				0,
+				KeyEvent.VK_RIGHT,
+				KeyEvent.CHAR_UNDEFINED);
+
+		this.keyPressed(e);
+	}
+
+
 
 	@Override
 	public void keyPressed(KeyEvent e) {
